@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import LoadingScreen from '../assets/Logo3.png';
+import Logo from '../assets/intelwise-logistics.png';
 import {
   ArrowRight,
   Plane,
@@ -1847,7 +1848,7 @@ const CTASection = () => {
         >
           <motion.div variants={fadeInUp} className="flex justify-center mb-8">
             <div className="bg-white rounded-2xl px-5 py-2.5 border border-navy/10 shadow-[0_4px_20px_rgba(0,0,0,0.28)] inline-block">
-              <img src="/intelwise-logistics.png" alt="IntelWise Logistics" className="h-10 w-auto object-contain" />
+              <img src={Logo} alt="IntelWise Logistics" className="h-10 w-auto object-contain" />
             </div>
           </motion.div>
 
