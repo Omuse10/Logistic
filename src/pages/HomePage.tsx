@@ -410,7 +410,7 @@ const AnimatedGlobe = () => (
       boxShadow: '0 0 100px rgba(47,128,237,0.55), 0 0 40px rgba(47,128,237,0.28)',
     }}>
       <img src={LoadingScreen} alt="Global Logistics Network"
-        style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
+        style={{ display: 'block', width: '170%', height: '170%', objectFit: 'cover', objectPosition: 'center center', top: '47%', left: '50%', transform: 'translate(-50%, -45%)', position: 'absolute' }}
         draggable={false} />
       <div className="absolute inset-0 rounded-full pointer-events-none" style={{
         background: 'radial-gradient(circle, transparent 38%, rgba(4,10,28,0.32) 65%, rgba(4,10,28,0.60) 100%)',
