@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import LoadingScreen from '../assets/Logo3.png';
 import {
   ArrowRight,
   Plane,
@@ -408,7 +409,7 @@ const AnimatedGlobe = () => (
       overflow: 'hidden',
       boxShadow: '0 0 100px rgba(47,128,237,0.55), 0 0 40px rgba(47,128,237,0.28)',
     }}>
-      <img src="/Logo3.png" alt="Global Logistics Network"
+      <img src={LoadingScreen} alt="Global Logistics Network"
         style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
         draggable={false} />
       <div className="absolute inset-0 rounded-full pointer-events-none" style={{

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import Logo from '../assets/intelwise-logistics.png';
 import {
   Search,
   Package,
@@ -131,7 +132,7 @@ const TrackingPage = () => {
             <motion.div variants={fadeInUp} className="flex justify-center mb-8">
               <div className="bg-white rounded-2xl px-5 py-2.5 border border-navy/10 shadow-[0_4px_20px_rgba(0,0,0,0.28)] inline-block">
                 <img
-                  src="/intelwise-logistics.png"
+                  src={Logo}
                   alt="IntelWise Logistics"
                   className="h-10 w-auto object-contain"
                 />

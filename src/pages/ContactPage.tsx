@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Logo from '../assets/intelwise-logistics.png';
 import {
   Mail,
   Phone,
@@ -38,15 +39,15 @@ const contactMethods = [
   {
     icon: Phone,
     title: 'Call Us',
-    value: '+1 (234) 567-890',
+    value: '+254 738 576 930',
     description: 'Mon-Fri 8AM-8PM EST',
-    action: 'tel:+1234567890',
+    action: 'tel:+254738576930',
   },
   {
     icon: MapPin,
     title: 'Visit Us',
-    value: '350 5th Avenue, Suite 4000',
-    description: 'New York, NY 10118',
+    value: 'PO BOX 90071 00100, Nairobi, Kenya',
+    description: 'Schedule an appointment to visit our office',
     action: '#',
   },
 ];
@@ -156,7 +157,7 @@ const ContactPage = () => {
             <motion.div variants={fadeInUp} className="flex justify-center mb-8">
               <div className="bg-white rounded-2xl px-5 py-2.5 border border-navy/10 shadow-[0_4px_20px_rgba(0,0,0,0.28)] inline-block">
                 <img
-                  src="/intelwise-logistics.png"
+                  src={Logo}
                   alt="IntelWise Logistics"
                   className="h-10 w-auto object-contain"
                 />
@@ -307,7 +308,7 @@ const ContactPage = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-xl border border-navy/20 focus:outline-none focus:ring-2 focus:ring-orange focus:border-transparent"
-                        placeholder="+1 (234) 567-890"
+                        placeholder="+254 738 576 930"
                       />
                     </div>
                   </div>
@@ -401,13 +402,13 @@ const ContactPage = () => {
                 </p>
                 <div className="space-y-4">
                   <a
-                    href="tel:+1234567890"
+                    href="tel:+254738576930"
                     className="flex items-center gap-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors"
                   >
                     <Phone className="w-5 h-5 text-orange" />
                     <div>
                       <p className="text-sm text-white/60">Call Now</p>
-                      <p className="font-semibold">+1 (234) 567-890</p>
+                      <p className="font-semibold">+254 738 576 930</p>
                     </div>
                   </a>
                   <div className="flex items-center gap-4 p-4 bg-white/10 rounded-xl">
