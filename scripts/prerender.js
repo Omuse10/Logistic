@@ -37,3 +37,4 @@ async function prerender() {
   serverProcess.kill();
   process.exit(0);
 }
+prerender();
