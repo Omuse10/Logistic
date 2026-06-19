@@ -11,7 +11,7 @@ function run(cmd) {
     const proc = exec(cmd);
     proc.stdout.on('data', d => process.stdout.write(d));
     proc.stderr.on('data', d => process.stderr.write(d));
-    setTimeout(resolve, 2000); // give server time to boot
+    setTimeout(resolve, 2000);
   });
 }
 
