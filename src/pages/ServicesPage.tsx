@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/intelwise-logistics.png';
+import { useState } from 'react';
 import {
   Plane,
   Ship,
@@ -16,6 +17,8 @@ import {
   Globe,
   Shield,
   Zap,
+  ChevronDown,
+  HelpCircle,
 } from 'lucide-react';
 
 const fadeInUp = {
@@ -192,6 +195,34 @@ const benefits = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'Does IntelWise Logistics handle customs clearance for imports into Kenya?',
+    answer:
+      'Yes, IntelWise Logistics provides full customs documentation and clearance services for both imports and exports through Kenyan ports and border points.',
+  },
+  {
+    question: 'Do you offer shipping services from Asia to Kenya?',
+    answer:
+      'Yes, we connect Kenya with trade partners across Asia, offering both air and sea freight options depending on cargo type and timeline.',
+  },
+  {
+    question: 'Can you arrange shipping from Kenya to Canada or Australia?',
+    answer:
+      'Yes, IntelWise Logistics manages freight forwarding to and from Canada and Australia, including documentation and customs support on both ends.',
+  },
+  {
+    question: 'Do you offer warehousing services in Nairobi?',
+    answer:
+      'Yes, we provide secure short and long-term warehousing and storage solutions for businesses across East Africa.',
+  },
+  {
+    question: 'What areas does IntelWise Logistics serve?',
+    answer:
+      'IntelWise Logistics is based in Nairobi, Kenya, and serves clients across Kenya while connecting trade partners in Asia, Canada, and Australia.',
+  },
+];
+
 const ServicesPage = () => {
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
@@ -201,6 +232,9 @@ const ServicesPage = () => {
   const benefitsInView = useInView(benefitsRef, { once: true, margin: '-100px' });
   const ctaRef = useRef(null);
   const ctaInView = useInView(ctaRef, { once: true, margin: '-100px' });
+  const faqRef = useRef(null);
+  const faqInView = useInView(faqRef, { once: true, margin: '-100px' });
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <main className="pt-20 bg-[#071628]">
@@ -372,6 +406,55 @@ const ServicesPage = () => {
           </motion.div>
         </div>
       </section>
+
+              {/* FAQ Section */}
+        <section ref={faqRef} className="py-24 bg-background">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial="hidden"
+              animate={faqInView ? 'visible' : 'hidden'}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeInUp} className="text-center mb-16">
+                <div className="inline-flex items-center gap-2 p-3 rounded-xl bg-orange/10 mb-4">
+                  <HelpCircle className="w-6 h-6 text-orange" />
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-navy/60 text-lg">
+                  Common questions about our logistics services across Kenya and beyond
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeInUp} className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <div
+                    key={index}
+                    className="border border-navy/10 rounded-2xl overflow-hidden"
+                  >
+                    <button
+                      onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                      className="w-full flex items-center justify-between gap-4 p-6 text-left bg-white hover:bg-navy/[0.02] transition-colors"
+                    >
+                      <span className="font-semibold text-navy">{faq.question}</span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-orange flex-shrink-0 transition-transform ${
+                          openFaq === index ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                    {openFaq === index && (
+                      <div className="px-6 pb-6 bg-white">
+                        <p className="text-navy/60">{faq.answer}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
 
       {/* CTA Section */}
       <section ref={ctaRef} className="py-24 bg-navy">
