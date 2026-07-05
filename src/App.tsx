@@ -47,7 +47,7 @@ const WhatsAppButton = () => {
   const whatsappUrl = `https://wa.me/${phoneNumber}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-3 right-3 z-50">
       <a
         href={whatsappUrl}
         target="_blank"
