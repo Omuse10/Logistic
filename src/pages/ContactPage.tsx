@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { motion, useInView } from 'framer-motion';
 import Logo from '../assets/intelwise-logistics.png';
 import {
@@ -91,24 +92,50 @@ const ContactPage = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
+  const formRef = useRef<HTMLFormElement | null>(null);
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true, margin: '-100px' });
-  const formRef = useRef(null);
-  const formInView = useInView(formRef, { once: true, margin: '-100px' });
+  const formSectionRef = useRef(null);
+  const formInView = useInView(formSectionRef, { once: true, margin: '-100px' });
   const officesRef = useRef(null);
   const officesInView = useInView(officesRef, { once: true, margin: '-100px' });
   const faqRef = useRef(null);
   const faqInView = useInView(faqRef, { once: true, margin: '-100px' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitMessage('');
 
-    // Simulate form submission
-    setTimeout(() => {
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setSubmitMessage('Email delivery is not configured yet. Please add your EmailJS credentials to the site environment.');
       setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          company: formData.company || 'Not provided',
+          phone: formData.phone || 'Not provided',
+          service: formData.service || 'Not provided',
+          message: formData.message,
+          subject: `New quote request from ${formData.name}`,
+        },
+        publicKey
+      );
+
       setIsSubmitted(true);
       setFormData({
         name: '',
@@ -118,7 +145,13 @@ const ContactPage = () => {
         service: '',
         message: '',
       });
-    }, 1500);
+      setSubmitMessage('');
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      setSubmitMessage('We could not send your message right now. Please contact us directly at info@intelwiselogistics.com.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -217,7 +250,7 @@ const ContactPage = () => {
       </section>
 
       {/* Form Section */}
-      <section ref={formRef} className="py-24 bg-white">
+      <section ref={formSectionRef} className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Left: Form */}
@@ -249,6 +282,7 @@ const ContactPage = () => {
                 </motion.div>
               ) : (
                 <motion.form
+                  ref={formRef}
                   variants={fadeInUp}
                   onSubmit={handleSubmit}
                   className="space-y-6"
@@ -348,6 +382,12 @@ const ContactPage = () => {
                       placeholder="Tell us about your shipping needs..."
                     />
                   </div>
+
+                  {submitMessage ? (
+                    <p className="rounded-xl border border-orange/20 bg-orange/10 p-4 text-sm text-navy">
+                      {submitMessage}
+                    </p>
+                  ) : null}
 
                   <button
                     type="submit"

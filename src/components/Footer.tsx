@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Logo from '../assets/intelwise-logistics.png';
@@ -12,6 +14,10 @@ import {
 } from 'lucide-react';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const footerLinks = {
     services: [
       { to: '/services', label: 'Air Freight' },
@@ -41,6 +47,44 @@ const Footer = () => {
     { icon: Facebook, href: '#', label: 'Facebook' },
     { icon: Instagram, href: '#', label: 'Instagram' },
   ];
+
+  const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setNewsletterStatus('');
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setNewsletterStatus('Newsletter delivery is not configured yet.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: 'Website Subscriber',
+          reply_to: email,
+          subject: 'New newsletter signup',
+          message: 'A visitor subscribed to updates from the website.',
+        },
+        publicKey
+      );
+
+      setNewsletterStatus('Thanks for subscribing. We will keep you updated.');
+      setEmail('');
+    } catch (error) {
+      console.error('Newsletter email error:', error);
+      setNewsletterStatus('We could not subscribe you right now. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-navy text-white">
@@ -147,18 +191,27 @@ const Footer = () => {
             {/* Newsletter mini */}
             <div className="mt-8">
               <p className="text-sm font-medium text-white/70 mb-3">Stay Updated</p>
-              <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 px-3 py-2 bg-white/10 border border-white/10 rounded-lg text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-orange"
-                />
-                <button
-                  type="submit"
-                  className="px-3 py-2 bg-orange rounded-lg text-sm font-medium hover:bg-orange-400 transition-colors"
-                >
-                  Go
-                </button>
+              <form className="flex flex-col gap-2" onSubmit={handleNewsletterSubmit}>
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email"
+                    required
+                    className="flex-1 px-3 py-2 bg-white/10 border border-white/10 rounded-lg text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-orange"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-3 py-2 bg-orange rounded-lg text-sm font-medium hover:bg-orange-400 transition-colors disabled:opacity-60"
+                  >
+                    {isSubmitting ? '...' : 'Go'}
+                  </button>
+                </div>
+                {newsletterStatus ? (
+                  <p className="text-xs text-white/70">{newsletterStatus}</p>
+                ) : null}
               </form>
             </div>
           </div>
