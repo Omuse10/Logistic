@@ -69,7 +69,7 @@ const Footer = () => {
         templateId,
         {
           from_name: 'Website Subscriber',
-          reply_to: email,
+          visitor_email: email,
           subject: 'New newsletter signup',
           message: 'A visitor subscribed to updates from the website.',
         },
