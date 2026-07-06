@@ -45,10 +45,10 @@ const staggerContainer = {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const stats = [
-  { value: 120, suffix: '+', label: 'Countries Served', icon: Globe },
-  { value: 50, suffix: 'K+', label: 'Deliveries Made', icon: PackageCheck },
-  { value: 99.8, suffix: '%', label: 'On-Time Accuracy', icon: Shield },
-  { value: 24, suffix: '/7', label: 'Expert Support', icon: Clock },
+  { value: 120, suffix: '5+', label: 'Countries Served', icon: Globe },
+  { value: 50, suffix: '3K+', label: 'Deliveries Made', icon: PackageCheck },
+  { value: 99.8, suffix: '90%', label: 'On-Time Accuracy', icon: Shield },
+  { value: 24, suffix: '4/7', label: 'Expert Support', icon: Clock },
 ];
 
 const services = [
